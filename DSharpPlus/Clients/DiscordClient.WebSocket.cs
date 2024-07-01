@@ -127,10 +127,10 @@ public sealed partial class DiscordClient
         {
             gwuri = new QueryUriBuilder(this.GatewayUri.ToString());
         }
-        
+
         gwuri.AddParameter("v", "10")
              .AddParameter("encoding", "json");
-        
+
         if (this.Configuration.GatewayCompressionLevel == GatewayCompressionLevel.Stream)
         {
             gwuri.AddParameter("compress", "zlib-stream");
@@ -491,7 +491,7 @@ public sealed partial class DiscordClient
     {
         GatewayResume resume = new()
         {
-            Token = $"Bot {this.token}",
+            Token = $"Bot {this.Configuration.Token}",
             SessionId = this.sessionId,
             SequenceNumber = Volatile.Read(ref this.lastSequence)
         };
