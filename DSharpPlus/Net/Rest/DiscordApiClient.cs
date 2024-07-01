@@ -5914,7 +5914,7 @@ public sealed class DiscordApiClient
                 Method = HttpMethod.Post,
                 Values = values,
                 Files = builder.Files,
-                IsExemptFromGlobalLimit = true
+                IsExemptFromAllLimits = true
             };
 
             try
@@ -6002,7 +6002,7 @@ public sealed class DiscordApiClient
                 Method = HttpMethod.Patch,
                 Values = values,
                 Files = builder.Files,
-                IsExemptFromGlobalLimit = true
+                IsExemptFromAllLimits = true
             };
 
             RestResponse res = await this.rest.ExecuteRequestAsync(request);
@@ -6033,7 +6033,7 @@ public sealed class DiscordApiClient
             Route = route,
             Url = url,
             Method = HttpMethod.Delete,
-            IsExemptFromGlobalLimit = true
+            IsExemptFromAllLimits = true
         };
 
         await this.rest.ExecuteRequestAsync(request);
@@ -6089,7 +6089,7 @@ public sealed class DiscordApiClient
             Method = HttpMethod.Post,
             Values = values,
             Files = builder.Files,
-            IsExemptFromGlobalLimit = true
+            IsExemptFromAllLimits = true
         };
 
         RestResponse res;
@@ -6122,8 +6122,8 @@ public sealed class DiscordApiClient
         ulong messageId,
         DiscordWebhookBuilder builder,
         IEnumerable<DiscordAttachment> attachments
-    ) =>
-        EditWebhookMessageAsync(applicationId, interactionToken, messageId, builder, attachments);
+    ) 
+        => EditWebhookMessageAsync(applicationId, interactionToken, messageId, builder, attachments);
 
     internal ValueTask DeleteFollowupMessageAsync(ulong applicationId, string interactionToken, ulong messageId)
         => DeleteWebhookMessageAsync(applicationId, interactionToken, messageId);
