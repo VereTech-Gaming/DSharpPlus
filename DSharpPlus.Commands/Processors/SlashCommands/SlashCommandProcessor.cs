@@ -37,7 +37,7 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<Interac
     public IReadOnlyDictionary<ulong, Command> Commands => applicationCommandsMapping;
 
     private static readonly List<DiscordApplicationCommand> applicationCommands = [];
-    private static IReadOnlyDictionary<ulong, Command> applicationCommandsMapping;
+    private static IReadOnlyDictionary<ulong, Command> applicationCommandsMapping = FrozenDictionary<ulong, Command>.Empty;
 
     [GeneratedRegex(@"^[-_\p{L}\p{N}\p{IsDevanagari}\p{IsThai}]{1,32}$")]
     private partial Regex NameLocalizationRegex();
