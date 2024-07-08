@@ -37,7 +37,7 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<Interac
     public IReadOnlyDictionary<ulong, Command> Commands => applicationCommandsMapping;
 
     private static readonly List<DiscordApplicationCommand> applicationCommands = [];
-    private static IReadOnlyDictionary<ulong, Command> applicationCommandsMapping;
+    private static IReadOnlyDictionary<ulong, Command> applicationCommandsMapping = FrozenDictionary<ulong, Command>.Empty;
 
     [GeneratedRegex(@"^[-_\p{L}\p{N}\p{IsDevanagari}\p{IsThai}]{1,32}$")]
     private partial Regex NameLocalizationRegex();
@@ -145,8 +145,9 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<Interac
 
     public bool TryFindCommand(DiscordInteraction interaction, [NotNullWhen(true)] out Command? command, [NotNullWhen(true)] out IEnumerable<DiscordInteractionDataOption>? options)
     {
-        if (!this.Commands.TryGetValue(interaction.Data.Id, out command))
+        if (this.Commands is null || !this.Commands.TryGetValue(interaction.Data.Id, out command))
         {
+            command = null;
             options = null;
             return false;
         }
