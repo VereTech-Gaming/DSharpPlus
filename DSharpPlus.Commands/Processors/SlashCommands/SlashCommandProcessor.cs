@@ -145,8 +145,9 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<Interac
 
     public bool TryFindCommand(DiscordInteraction interaction, [NotNullWhen(true)] out Command? command, [NotNullWhen(true)] out IEnumerable<DiscordInteractionDataOption>? options)
     {
-        if (!this.Commands.TryGetValue(interaction.Data.Id, out command))
+        if (this.Commands is null || !this.Commands.TryGetValue(interaction.Data.Id, out command))
         {
+            command = null;
             options = null;
             return false;
         }
