@@ -52,11 +52,8 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<ISlashA
         // Find all converters and prepare other helpful data.
         await base.ConfigureAsync(extension);
 
-        // Register the commands if the user wants to.
-        if (!this.isApplicationCommandsRegistered && this.Configuration.RegisterCommands)
-        {
-            await RegisterSlashCommandsAsync(extension);
-        }
+        // Register the commands.
+        await RegisterSlashCommandsAsync(extension);
     }
 
     public async Task ExecuteInteractionAsync(DiscordClient client, InteractionCreatedEventArgs eventArgs)

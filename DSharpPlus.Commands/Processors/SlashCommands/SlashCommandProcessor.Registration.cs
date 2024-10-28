@@ -47,7 +47,7 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<ISlashA
     /// </summary>
     /// <param name="extension">The extension to read the commands from.</param>
     public async ValueTask RegisterSlashCommandsAsync(CommandsExtension extension)
-    {
+    {        
         if (this.isApplicationCommandsRegistered)
         {
             return;
@@ -95,7 +95,7 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<ISlashA
 
         List<DiscordApplicationCommand> discordCommands = [];
 
-        if (this.Configuration.UnconditionallyOverwriteCommands)
+        if (this.Configuration.UnconditionallyOverwriteCommands && this.Configuration.RegisterCommands)
         {
             discordCommands.AddRange
             (
@@ -108,7 +108,7 @@ public sealed partial class SlashCommandProcessor : BaseCommandProcessor<ISlashA
                     )
             );
         }
-        else
+        else if (this.Configuration.RegisterCommands)
         {
             IReadOnlyList<DiscordApplicationCommand> preexisting = this.extension.DebugGuildId == 0
                 ? await this.extension.Client.GetGlobalApplicationCommandsAsync(true)
